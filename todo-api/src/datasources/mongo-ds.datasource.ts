@@ -10,7 +10,7 @@ const config = {
   port: 0,
   user: '',
   password: '',
-  database: 'todo',
+  database: 'todoDB',
   useNewUrlParser: true
 };
 

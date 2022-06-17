@@ -1,14 +1,9 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property } from '@loopback/repository';
 
-@model({settings: {strict: false}})
+@model({
+  settings: { strict: false, mongodb: { collection: "user" } },
+})
 export class User extends Entity {
-  @property({
-    type: 'string',
-    id: true,
-    mongodb: {dataType: 'ObjectId'}
-  })
-  id: string;
-
   @property({
     type: 'string',
     required: true,
@@ -17,9 +12,16 @@ export class User extends Entity {
 
   @property({
     type: 'string',
+    id: true,
+    generated: true,
+  })
+  id: string;
+
+  @property({
+    type: 'string',
     required: true,
   })
-  userpassword: string;
+  password: string;
 
   // Define well-known properties here
 
