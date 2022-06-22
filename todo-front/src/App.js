@@ -4,6 +4,8 @@ import Home from './components/Home';
 import Main from './components/Main';
 import Navbar from './components/Navbar';
 import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import Testi from './components/Testi';
 
 function App() {
   return (
@@ -11,7 +13,9 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home />}/>
-        <Route path='signin' element={<SignIn/>}/>
+        <Route path='SignIn' element={<SignIn/>}/>
+        <Route path='SignUp' element={<SignUp/>}/>
+        <Route path='Testi' element={<Testi/>}/>
       </Routes>
     </div>
   );
