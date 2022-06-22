@@ -2,10 +2,10 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './components/Home';
 import Main from './components/Main';
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBar';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
-import Testi from './components/Testi';
+import Tasks from './components/Tasks';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path='/' element={<Home />}/>
         <Route path='SignIn' element={<SignIn/>}/>
         <Route path='SignUp' element={<SignUp/>}/>
-        <Route path='Testi' element={<Testi/>}/>
+        <Route path='Tasks' element={<Tasks/>}/>
       </Routes>
     </div>
   );
