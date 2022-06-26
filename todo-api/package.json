@@ -12,7 +12,7 @@
     "node": "14 || 16 || 17 || 18"
   },
   "scripts": {
-    "dev": "nodemon server/server.js --watch common --watch server",
+    "start:watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
     "build": "lb-tsc",
     "build:watch": "lb-tsc --watch",
     "lint": "npm run eslint && npm run prettier:check",
@@ -50,6 +50,8 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@loopback/authentication": "^9.0.1",
+    "@loopback/authentication-jwt": "^0.12.1",
     "@loopback/boot": "^5.0.1",
     "@loopback/core": "^4.0.1",
     "@loopback/repository": "^5.0.1",
@@ -66,8 +68,8 @@
     "@loopback/testlab": "^5.0.1",
     "@types/node": "^14.18.21",
     "eslint": "^8.17.0",
-    "nodemon": "^2.0.16",
     "source-map-support": "^0.5.21",
+    "tsc-watch": "^5.0.3",
     "typescript": "~4.7.3"
   }
 }

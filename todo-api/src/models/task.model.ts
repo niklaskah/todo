@@ -1,6 +1,6 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model({settings: {strict: true}, mongodb: { collection: "task" }})
+@model({settings: {strict: true, mongodb: { collection: "task" }}})
 export class Task extends Entity {
   @property({
     type: 'string',

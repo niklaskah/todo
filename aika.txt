@@ -1,0 +1,8 @@
+3h kirjastojen tutkiminen
+4h loopback ongelmien selvittäminen
+4h crud back end testaus/tutki
+4h material ui documentaation tutkiminen/testailu
+3h todo lista crud front
+3h todo lista crud front
+3h todo lista crud front
+4h loopback user.controller autentikaatiota varten
