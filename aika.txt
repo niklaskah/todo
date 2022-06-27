@@ -6,3 +6,4 @@
 3h todo lista crud front
 3h todo lista crud front
 4h loopback user.controller autentikaatiota varten
+2h rekisteröityminen ja kirjautuminen aloitettu
