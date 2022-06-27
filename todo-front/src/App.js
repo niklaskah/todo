@@ -3,7 +3,6 @@ import './App.css';
 import AddTask from './components/AddTask';
 import EditTask from './components/EditTask';
 import Home from './components/Home';
-import Main from './components/Main';
 import Navbar from './components/NavBar';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
