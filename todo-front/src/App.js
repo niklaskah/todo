@@ -10,6 +10,7 @@ import TaskDetails from './components/TaskDetails';
 import Tasks from './components/Tasks';
 
 function App() {
+  
   return (
     <div className="App">
       <Navbar/>

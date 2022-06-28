@@ -48,7 +48,8 @@ export default function SignIn() {
     .then(response => {
       console.log(response);
       alert("Kirjautuminen onnistui!");
-      // navigate(`/tasks`,  { replace: true })
+      navigate(`/tasks`,  { replace: true })
+      localStorage.setItem("user", JSON.stringify(response.data))
     }).catch(error => console.log(error))
   };
 

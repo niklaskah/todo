@@ -22,6 +22,12 @@ export class Task extends Entity {
   description: string;
 
   @property({
+    type: 'string',
+    required: true,
+  })
+  userId: string;
+
+  @property({
     type: 'date',
   })
   startTime?: string;
