@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,13 +14,15 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 
-const pages = ['signin', 'signup', 'tasks'];
+
+const pages =  ['signin', 'signup', 'tasks'];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const settings = ['Logout'];
 
 const Navbar = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -92,7 +94,7 @@ const Navbar = () => {
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}
-                                        <Link style={{textDecoration: "none", color:"white"}} to={`/${page}`}>
+                                        <Link style={{ textDecoration: "none", color: "white" }} to={`/${page}`}>
                                             {page}
                                         </Link>
                                     </Typography>
@@ -126,7 +128,7 @@ const Navbar = () => {
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                <Link style={{textDecoration: "none", color:"white"}} to={`/${page}`}>
+                                <Link style={{ textDecoration: "none", color: "white" }} to={`/${page}`}>
                                     {page}
                                 </Link>
                             </Button>
@@ -158,11 +160,11 @@ const Navbar = () => {
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">
-                                    <Link style={{textDecoration: "none", color:"black"}} to={`/${setting}`}>
+                                        <Link style={{ textDecoration: "none", color: "black" }} to={`/${setting}`}>
                                             {setting}
                                         </Link>
                                         {/* {setting} */}
-                                        </Typography>
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

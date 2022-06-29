@@ -7,3 +7,6 @@
 3h todo lista crud front
 4h loopback user.controller autentikaatiota varten
 2h rekisteröityminen ja kirjautuminen aloitettu
+2h api kyselyiden korjaaminen toimimaan kirjautunella käyttäjällä
+4h vanhojen komponenttien korvaaminen material ui elementeillä
+4h viilausta ja tehtävän käytetyn ajan seuraamisen toiminnallisuus

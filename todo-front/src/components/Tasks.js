@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import TaskItem from "./TaskItem"
 import { Link } from "react-router-dom"
 import UserService from "../services/UserService"
 import TaskService from "../services/TaskService"
@@ -39,16 +38,22 @@ const Tasks = () => {
         .catch(error => {
           console.log(error);
         })
-
-
     }
     console.log("user testi ", user);
   }, [])
 
+  const onDelete = (id) => {
+    TaskService.deleteById(id)
+    .then(response => {
+      alert("Tehtävä poistettu")
+      setTasks(tasks.filter(task => task.id !== id))
+  })
+  .catch(error => console.log(error))
+  }
+
   const taskItems = tasks.map(task => {
     return (
-      // <TaskItem key={task.id} item={task} userId={user} />
-      <TaskCard key={task.id} details={task} userId={user} />
+      <TaskCard key={task.id} details={task} userId={user} onClick={onDelete} />
     )
   })
 

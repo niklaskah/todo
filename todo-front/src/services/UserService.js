@@ -1,25 +1,38 @@
 import axios from "axios";
 
-const login = (user) => {
+const login = async (user) => {
 
     const request = axios.post(`http://[::1]:3000/users/login`, user)
-    return request.then(response => response.data)
+    const response = await request;
+    return response.data;
 }
 
-const register = (user) => {
+const register = async (user) => {
 
     const request = axios.post(`http://[::1]:3000/users/signup`, user)
-    return request.then(response => response.data)
+    const response = await request;
+    return response.data;
 }
 
-const checkUserToken = (token) => {
+const checkUserToken = async (token) => {
 
     const request = axios.get(`http://[::1]:3000/whoAmI`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
     })
-    return request.then(response => response.data)
+    const response = await request;
+    return response.data;
+}
+
+const isLoggedIn = async () => {
+    if (checkUserToken === "") {
+        console.log("userloggedin testi ", false);
+        return false
+    } else {
+        console.log("userloggedin testi ", true);
+        return true
+    }
 }
 
 const logout = () => {
@@ -29,10 +42,11 @@ const logout = () => {
         console.log(error);
     }
 }
-
-export default {
+const UserService = {
     login,
     register,
     checkUserToken,
-    logout
+    logout,
 }
+export default UserService
+export {isLoggedIn}

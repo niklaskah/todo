@@ -38,9 +38,10 @@ export class Task extends Entity {
   endTime?: string;
 
   @property({
-    type: 'string',
+    type: 'number',
+    default: 0
   })
-  spentTime?: string;
+  spentTime?: number;
 
   // Define well-known properties here
 
