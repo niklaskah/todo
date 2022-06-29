@@ -1,8 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import userService from "../services/UserService";
 
 const AddTask = () => {
+
+  const [user, setUser] = useState("")
+
+  useEffect(() => {
+    const local = JSON.parse(localStorage.getItem('user'))
+    if (local == null) {
+      console.log("user tokenia ei lötynyt");
+    } else {
+      userService.checkUserToken(local.token)
+      .then(response => {
+        console.log(response)
+        setUser(response)
+      }
+        )
+        .catch(error => {
+          console.log(error);
+        })
+        console.log("user" ,user)
+    }
+  }, [])
 
     const [inputs, setInputs] = useState({});
 
@@ -15,7 +36,8 @@ const AddTask = () => {
     const handleSubmit = (event) => {
         const newTask = {
             name: details.name,
-            description: details.description
+            description: details.description,
+            userId: user
         }
       event.preventDefault();
       console.log(details);
@@ -31,6 +53,8 @@ const AddTask = () => {
     let navigate = useNavigate()
 
     const [details, setDetails] = useState ([])
+
+
 
     return(
 

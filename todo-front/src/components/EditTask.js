@@ -16,7 +16,7 @@ const EditTask = () => {
       event.preventDefault();
       console.log(details);
       axios.request({
-        method:"put",
+        method:"patch",
         url:`http://[::1]:3000/tasks/${details.id}`,
         data: details
       }).then(response => {

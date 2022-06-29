@@ -5,14 +5,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 const TaskDetails = () => {
     const params = useParams()
     const taskId = params.Id
-    console.log("url param id",params);
+    // console.log("url param id",params);
 
     let navigate = useNavigate()
 
     const [details, setDetails] = useState ([])
 
     useEffect(() => {
-        console.log("edittask details id testi ", taskId);
+        // console.log("edittask details id testi ", taskId);
         axios.get(`http://[::1]:3000/tasks/${taskId}`)
           .then(response => {
             console.log(response);
