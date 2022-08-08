@@ -69,12 +69,6 @@ const AddTask = () => {
 
   const [details, setDetails] = useState([])
 
-  const handlePickerChange = (newValue) => {
-    // setValue(newValue);
-  };
-
-
-
   return (
 
     <ThemeProvider theme={theme}>
@@ -124,7 +118,9 @@ const AddTask = () => {
                     label="Alkaa"
                     name="startTime"
                     value={startTime}
-                    onChange={handlePickerChange}
+                    onChange={(newValue) => {
+                      setStartTime(newValue.format())
+                    }}
                     renderInput={(params) => <TextField {...params} fullWidth />}
                   />
                 </LocalizationProvider>
@@ -135,7 +131,9 @@ const AddTask = () => {
                     label="Loppuu"
                     name="endTime"
                     value={endTime}
-                    onChange={handlePickerChange}
+                    onChange={(newValue) => {
+                      setEndTime(newValue.format())
+                    }}
                     renderInput={(params) => <TextField {...params} fullWidth />}
                   />
                 </LocalizationProvider>

@@ -24,6 +24,7 @@ const EditTask = () => {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
+    console.log("nimi ",typeof(name));
     setDetails(values => ({...values, [name]: value}))
   }
 
@@ -45,6 +46,7 @@ const EditTask = () => {
   let navigate = useNavigate()
 
   const [details, setDetails] = useState ([])
+  console.log("start end arvot ", details.startTime," " , details.endTime)
 
   useEffect(() => {
       console.log("task details id testi ", params.id);
@@ -59,14 +61,10 @@ const EditTask = () => {
         .catch(error => {
           console.log(error);
         })
+
+        
       
     }, [])
-
-  // const handlePickerChange = (newValue) => {
-  //   setValue(newValue);
-  // };
-
-
 
   return (
 
@@ -96,7 +94,6 @@ const EditTask = () => {
                   value={details.name || ""}
                   onChange={handleChange}
                   fullWidth
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12}>
@@ -116,9 +113,9 @@ const EditTask = () => {
                   <DateTimePicker
                     label="Alkaa"
                     name="startTime"
-                    value={startTime}
+                    value={details.startTime }
                     onChange={(newValue) => {
-                      setStartTime(newValue);
+                      setDetails(values => ({...values, ["startTime"]: newValue.format()}))
                     }}
                     renderInput={(params) => <TextField {...params} fullWidth />}
                   />
@@ -129,9 +126,9 @@ const EditTask = () => {
                   <DateTimePicker
                     label="Loppuu"
                     name="endTime"
-                    value={endTime}
+                    value={details.endTime}
                     onChange={(newValue) => {
-                      setEndTime(newValue);
+                      setDetails(values => ({...values, ["endTime"]: newValue.format()}))
                     }}
                     renderInput={(params) => <TextField {...params} fullWidth />}
                   />
