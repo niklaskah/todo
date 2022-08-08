@@ -17,8 +17,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const EditTask = () => {
   const theme = createTheme();
 
-  const [startTime, setStartTime] = useState(moment().format());
-  const [endTime, setEndTime] = useState(moment().format());
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
 
 
   const handleChange = (event) => {
@@ -53,6 +53,8 @@ const EditTask = () => {
           console.log(response);
           setDetails(response.data)
           console.log("edit details testi", details);
+          setStartTime(details.startTime)
+          setEndTime(details.endTime)
         })
         .catch(error => {
           console.log(error);
@@ -60,9 +62,9 @@ const EditTask = () => {
       
     }, [])
 
-  const handlePickerChange = (newValue) => {
-    // setValue(newValue);
-  };
+  // const handlePickerChange = (newValue) => {
+  //   setValue(newValue);
+  // };
 
 
 
@@ -115,7 +117,9 @@ const EditTask = () => {
                     label="Alkaa"
                     name="startTime"
                     value={startTime}
-                    onChange={handlePickerChange}
+                    onChange={(newValue) => {
+                      setStartTime(newValue);
+                    }}
                     renderInput={(params) => <TextField {...params} fullWidth />}
                   />
                 </LocalizationProvider>
@@ -126,7 +130,9 @@ const EditTask = () => {
                     label="Loppuu"
                     name="endTime"
                     value={endTime}
-                    onChange={handlePickerChange}
+                    onChange={(newValue) => {
+                      setEndTime(newValue);
+                    }}
                     renderInput={(params) => <TextField {...params} fullWidth />}
                   />
                 </LocalizationProvider>

@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import moment from "moment";
+import 'moment/locale/fi'
 
 const StopWatch = ({details}) => {
     const [isActive, setIsActive] = useState(false)
@@ -54,6 +56,7 @@ const StopWatch = ({details}) => {
 const TaskCard = (props) => {
 
     const { details, onClick } = props
+    moment.locale('fi')
 
     return (
         <Box sx={{ minWidth: 275, maxWidth: "md" }}>
@@ -66,8 +69,8 @@ const TaskCard = (props) => {
                         {details.name}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        Aloitusaika: {details.startTime} <br />
-                        Lopetusaika: {details.endTime}
+                        Aloitusaika: {moment(details.startTime).format("dddd, MMMM Do YYYY, h:mm:ss")} <br />
+                        Lopetusaika: {moment(details.endTime).format("dddd, MMMM Do YYYY, h:mm:ss")}
                     </Typography>
                     <Typography variant="body2">
                         {details.description}
