@@ -5,7 +5,7 @@ import AddTask from './components/AddTask';
 import EditTask from './components/EditTask';
 import Home from './components/Home';
 import Logout from './components/Logout';
-import Navbar from './components/Navbar';
+import NavBar from './components/NavBar';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import TaskDetails from './components/TaskDetails';
@@ -15,7 +15,7 @@ function App() {
   
   return (
     <div className="App">
-      <Navbar/>
+      <NavBar/>
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='signin' element={<SignIn/>}/>

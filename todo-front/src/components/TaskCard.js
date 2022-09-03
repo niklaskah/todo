@@ -9,7 +9,20 @@ import Box from '@mui/material/Box';
 import moment from "moment";
 import 'moment/locale/fi'
 
+const Timer = (spentTime) => {
+  return (
+    <div className="timer">
+      <span className="digits">
+        {("0" + Math.floor((spentTime / 60000) % 60)).slice(-2)}:
+      </span>
+      <span className="digits">
+        {("0" + Math.floor((spentTime / 1000) % 60)).slice(-2)}.
+      </span>
+    </div>
+  )
+}
 const StopWatch = ({details}) => {
+
     const [isActive, setIsActive] = useState(false)
     const [time, setTime] = useState(details.spentTime)
 
@@ -58,6 +71,7 @@ const TaskCard = (props) => {
     const { details, onClick } = props
     moment.locale('fi')
 
+
     return (
         <Box sx={{ minWidth: 275, maxWidth: "md" }}>
             <Card variant="outlined">
@@ -75,6 +89,9 @@ const TaskCard = (props) => {
                     <Typography variant="body2">
                         {details.description}
                     </Typography>
+                    <Typography variant="body2">
+                        Tehtävään käytetty aika: {moment.utc(details.spentTime).format('HH:mm')}
+                    </Typography>
                 </CardContent>
                 <CardActions>
                     <Link style={{ textDecoration: "none" }} to={`/tasks/edit/${details.id}`}>
@@ -82,6 +99,7 @@ const TaskCard = (props) => {
                     </Link>
                     <Button size="small" onClick={() => onClick(details.id)} >Poista</Button>
                     <StopWatch details={details}></StopWatch>
+                    <Timer time={details.spentTime}></Timer>
                 </CardActions>
             </Card>
         </Box>
