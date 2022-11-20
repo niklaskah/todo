@@ -6,36 +6,31 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import axios from "axios";
 import moment from "moment";
 import 'moment/locale/fi'
 
-const Timer = (spentTime) => {
-  return (
-    <div className="timer">
-      <span className="digits">
-        {("0" + Math.floor((spentTime / 60000) % 60)).slice(-2)}:
-      </span>
-      <span className="digits">
-        {("0" + Math.floor((spentTime / 1000) % 60)).slice(-2)}.
-      </span>
-    </div>
-  )
-}
-const StopWatch = ({details}) => {
+const StopWatch = (props) => {
 
-    const [isActive, setIsActive] = useState(false)
-    const [time, setTime] = useState(details.spentTime)
+  const { details, isActive, setIsActive, time, setTime} = props
 
     const handleStart = () => {
         setIsActive(true);
-        console.log("aloitettu tehtävä", details.name);
-        console.log(time);
+        // console.log("aloitettu tehtävä", details.name);
+        // console.log(time);
       }
 
       const handleStop = () => {
         setIsActive(false);
-        console.log("lopetettu tehtävä", details.name);
-        console.log(time);
+        // console.log("lopetettu tehtävä", details.name);
+        // console.log(time);
+        details.spentTime = time
+        axios.request({
+          method:"patch",
+          url:`http://[::1]:3000/tasks/${details.id}`,
+          data: details
+        }).then(response => {
+        })
       }
 
       useEffect(() => {
@@ -70,10 +65,12 @@ const TaskCard = (props) => {
 
     const { details, onClick } = props
     moment.locale('fi')
-
+    const [isActive, setIsActive] = useState(false)
+    const [time, setTime] = useState(details.spentTime)
+    // console.log("card time ", time);
 
     return (
-        <Box sx={{ minWidth: 275, maxWidth: "md" }}>
+        <Box sx={{ minWidth: 275, maxWidth: "md", padding: "5px"}}>
             <Card variant="outlined">
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -90,7 +87,7 @@ const TaskCard = (props) => {
                         {details.description}
                     </Typography>
                     <Typography variant="body2">
-                        Tehtävään käytetty aika: {moment.utc(details.spentTime).format('HH:mm')}
+                        Tehtävään käytetty aika: {moment.utc(time).format('HH:mm:ss')}
                     </Typography>
                 </CardContent>
                 <CardActions>
@@ -98,8 +95,7 @@ const TaskCard = (props) => {
                         <Button size="small">Muuta</Button>
                     </Link>
                     <Button size="small" onClick={() => onClick(details.id)} >Poista</Button>
-                    <StopWatch details={details}></StopWatch>
-                    <Timer time={details.spentTime}></Timer>
+                    <StopWatch details={details} isActive={isActive} setIsActive={setIsActive} time={time} setTime={setTime}></StopWatch>
                 </CardActions>
             </Card>
         </Box>

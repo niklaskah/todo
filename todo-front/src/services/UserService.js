@@ -26,12 +26,23 @@ const checkUserToken = async (token) => {
 }
 
 const isLoggedIn = async () => {
-    if (checkUserToken === "") {
-        console.log("userloggedin testi ", false);
+    let local = null
+    try {
+        let local = JSON.parse(localStorage.getItem('user'))
+        console.log("local token ", local);
+        if (local === null) {
+            console.log("userloggedin testi ", false);
+            return false
+        } else {
+            console.log("isloggedin local ", local);
+            const data = checkUserToken(local.token)
+            console.log("isloggedin", data);
+            console.log("userloggedin testi ", true);
+            return true
+        }
+    } catch (error) {
+        console.log("ei user tokenia");
         return false
-    } else {
-        console.log("userloggedin testi ", true);
-        return true
     }
 }
 
@@ -49,4 +60,4 @@ const UserService = {
     logout,
 }
 export default UserService
-export {isLoggedIn}
+export { isLoggedIn }

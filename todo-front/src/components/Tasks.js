@@ -3,9 +3,10 @@ import { Link } from "react-router-dom"
 import UserService from "../services/UserService"
 import TaskService from "../services/TaskService"
 import TaskCard from "./TaskCard";
+import { isLoggedIn } from "../services/UserService"
 
 
-const Tasks = () => {
+const Tasks = ({setLoginStatus}) => {
   const [tasks, setTasks] = useState([])
   const [user, setUser] = useState("")
 
@@ -13,6 +14,7 @@ const Tasks = () => {
     const local = JSON.parse(localStorage.getItem('user'))
     if (local == null) {
       console.log("user tokenia ei lötynyt");
+      setLoginStatus(false)
     } else {
       UserService.checkUserToken(local.token)
         .then(response => {
@@ -40,6 +42,7 @@ const Tasks = () => {
         })
     }
     console.log("user testi ", user);
+    setLoginStatus(true)
   }, [])
 
   const onDelete = (id) => {
@@ -57,13 +60,13 @@ const Tasks = () => {
     )
   })
 
-  if (user === "") {
+  if (isLoggedIn() === false) {
     return <h1>Kirjaudu sisään nähdäksesi tehtävälistan</h1>
   } else {
     return (
 
       <div>
-        <h1>TASKS</h1>
+        <h1>Tehtävälista</h1>
         <ul className="collection">
           {taskItems}
         </ul>

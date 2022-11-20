@@ -13,13 +13,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
+import { isLoggedIn } from "../services/UserService"
 
-
-const pages =  ['signin', 'signup', 'tasks'];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const settings = ['Logout'];
 
-const Navbar = () => {
+const Navbar = ({pages}) => {
 
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
