@@ -17,7 +17,7 @@ const app = new Realm.App({ id: REALM_APP_ID })
 function UserDetail({ user }) {
   return (
     <div>
-      <h1>Logged in with anonymous id: {user.id}</h1>
+      <h1>Kirjautunut Sisään</h1>
     </div>
   );
 }
