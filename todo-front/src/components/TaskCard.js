@@ -25,12 +25,12 @@ const StopWatch = (props) => {
         // console.log("lopetettu tehtävä", details.name);
         // console.log(time);
         details.spentTime = time
-        axios.request({
-          method:"patch",
-          url:`http://[::1]:3000/tasks/${details.id}`,
-          data: details
-        }).then(response => {
-        })
+        // axios.request({
+        //   method:"patch",
+        //   url:`http://[::1]:3000/tasks/${details.id}`,
+        //   data: details
+        // }).then(response => {
+        // })
       }
 
       useEffect(() => {

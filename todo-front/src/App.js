@@ -5,7 +5,7 @@ import AddTask from './components/AddTask';
 import EditTask from './components/EditTask';
 import Home from './components/Home';
 import Logout from './components/Logout';
-import NavBar from './components/NavBar';
+import Navbar from './components/Navbar';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import TaskDetails from './components/TaskDetails';
@@ -28,7 +28,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar pages={pages}/>
+      <Navbar pages={pages}/>
       <Routes>
         <Route path='/' element={<Home setLoginStatus={setLoginStatus}/>}/>
         <Route path='signin' element={<SignIn setLoginStatus={setLoginStatus}/>}/>
