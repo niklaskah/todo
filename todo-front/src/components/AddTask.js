@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from 'moment';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import userService from "../services/UserService";
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -14,31 +14,15 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TaskService from "../services/TaskService"
 
-const AddTask = () => {
+const AddTask = ({ user }) => {
   const theme = createTheme();
+  const mongo = user.mongoClient("mongodb-atlas");
+  const collection = mongo.db("todoDB").collection("task");
 
-  const [user, setUser] = useState("")
   const [startTime, setStartTime] = useState(moment().format());
   const [endTime, setEndTime] = useState(moment().format());
-
-  useEffect(() => {
-    const local = JSON.parse(localStorage.getItem('user'))
-    if (local == null) {
-      console.log("user tokenia ei lötynyt");
-    } else {
-      userService.checkUserToken(local.token)
-        .then(response => {
-          console.log(response)
-          setUser(response)
-        }
-        )
-        .catch(error => {
-          console.log(error);
-        })
-      console.log("user", user)
-    }
-  }, [])
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -47,21 +31,24 @@ const AddTask = () => {
   }
 
   const handleSubmit = (event) => {
+    console.log("user.id",user.id);
     const newTask = {
       name: details.name,
       description: details.description,
-      userId: user,
+      userId: user.id,
       startTime: startTime,
-      endTime: endTime
+      endTime: endTime,
+      spentTime: 0
     }
     event.preventDefault();
     console.log(details);
-    axios.post(`http://[::1]:3000/tasks`, newTask)
+    TaskService.addTask(collection, newTask)
       .then(response => {
         console.log(response);
         alert("Tehtävä lisätty");
         navigate(`/tasks`, { replace: true })
-      }).catch(error => console.log(error))
+      })
+      .catch(error => console.log(error))
   }
 
 

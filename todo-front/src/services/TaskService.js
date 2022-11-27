@@ -1,33 +1,78 @@
-import axios from "axios";
-import * as Realm from "realm-web"
 
-const getTasks = async () => {
-    const REALM_APP_ID = process.env.REACT_APP_REALM_APP_ID
-    console.log("app id", REALM_APP_ID);
-    const app = new Realm.App({id: REALM_APP_ID})
-    const credentials = Realm.Credentials.anonymous()
+const getTasksByUserId = async (user) => {
     let tasks = []
     try {
-        const user = await app.logIn(credentials)
         tasks = await user.functions.getTasksByUserId()
     } catch (error) {
         console.error(error)
     }
     return tasks
 }
-const getTasksByUserId = async (user) => {
-    // const request = axios.get(`http://[::1]:3000/tasks?filter[where][userId]=${user}`)
-    // const response = await request;
-    // return response.data;
+const deleteById = async (collection, id) => {
+    try {
+        const result = await collection.deleteOne({ _id: id })
+        return result
+    } catch (error) {
+        console.error(error)
+    }
 }
-const deleteById = async (id) => {
-    // const request = axios.delete(`http://[::1]:3000/tasks/${id}`)
-    // const response = await request;
-    // return response.data;
+const getById = async (collection, id) => {
+    try {
+        const result = await collection.findOne({ _id: id })
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+const addTask = async (collection, newTask) => {
+    console.log(newTask);
+    try {
+        const result = await collection.insertOne({
+            name: newTask.name,
+            description: newTask.description,
+            userId: newTask.userId,
+            startTime: newTask.startTime,
+            endTime: newTask.endTime,
+            spentTime: newTask.spentTime
+        })
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+const updateSpentTime = async (collection, id, newTime) => {
+    try {
+        const result = await collection.updateOne(
+            { _id: id },
+            { $set: { spentTime: newTime } })
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+const updateTask = async (collection, id, newData) => {
+    try {
+        const result = await collection.updateOne(
+            { _id: id },
+            { $set: {
+                name: newData.name,
+                description: newData.description,
+                userId: newData.userId,
+                startTime: newData.startTime,
+                endTime: newData.endTime,
+                spentTime: newData.spentTime } })
+        return result
+    } catch (error) {
+        console.error(error)
+    }
 }
 const TaskService = {
     getTasksByUserId,
     deleteById,
-    getTasks
+    addTask,
+    updateSpentTime,
+    updateTask,
+    getById
 }
 export default TaskService

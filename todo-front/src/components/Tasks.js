@@ -1,75 +1,44 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import UserService from "../services/UserService"
 import TaskService from "../services/TaskService"
 import TaskCard from "./TaskCard";
-import { isLoggedIn } from "../services/UserService"
 import * as Realm from "realm-web"
 
+const {
+  BSON: { ObjectId },
+} = Realm;
 
-const Tasks = ({ setLoginStatus }) => {
+const Tasks = ({ user }) => {
   const [tasks, setTasks] = useState([])
-  const [user, setUser] = useState("")
-
+  // const [user, setUser] = useState("")
+  const mongo = user.mongoClient("mongodb-atlas");
+  const collection = mongo.db("todoDB").collection("task");
   useEffect(() => {
-    TaskService.getTasks()
+    TaskService.getTasksByUserId(user)
       .then(response => {
-        console.log("tasks by id response ", response);
         setTasks(response)
-        console.log("tasks testi", tasks);
       })
       .catch(error => {
         console.log(error);
       })
   }, [])
 
-  // useEffect(() => {
-  //   const local = JSON.parse(localStorage.getItem('user'))
-  //   if (local == null) {
-  //     console.log("user tokenia ei lötynyt");
-  //     setLoginStatus(false)
-  //   } else {
-  //     UserService.checkUserToken(local.token)
-  //       .then(response => {
-  //         console.log(response)
-  //         setUser(response)
-  //         console.log("then set user ", user);
-  //         return response
-  //       }
-  //       )
-  //       .then((response) => {
-  //         console.log("returned user ", response);
-  //         TaskService.getTasksByUserId(response)
-  //           .then(response => {
-  //             console.log("tasks by id response ", response);
-  //             setTasks(response)
-  //             console.log("tasks testi", tasks);
-  //           })
-  //           .catch(error => {
-  //             console.log(error);
-  //           })
-  //       }
-  //       )
-  //       .catch(error => {
-  //         console.log(error);
-  //       })
-  //   }
-  //   console.log("user testi ", user);
-  //   setLoginStatus(true)
-  // }, [])
-
   const onDelete = (id) => {
-    //   TaskService.deleteById(id)
-    //   .then(response => {
-    //     alert("Tehtävä poistettu")
-    //     setTasks(tasks.filter(task => task.id !== id))
-    // })
-    // .catch(error => console.log(error))
+    console.log("tehtävä id ", id)
+    console.log("coll", collection);
+    TaskService.deleteById(collection, id)
+      .then(response => {
+        console.log(response);
+        alert("Tehtävä poistettu")
+        setTasks(tasks.filter(task => task._id !== id))
+      })
+      .catch(error => console.log(error))
   }
 
   const taskItems = tasks.map(task => {
+    const taskid = task._id.toString()
     return (
-      <TaskCard key={task.id} details={task} userId={user} onClick={onDelete} />
+      <TaskCard key={taskid} details={task} user={user} onClick={onDelete} />
     )
   })
 

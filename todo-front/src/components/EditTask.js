@@ -13,10 +13,17 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TaskService from "../services/TaskService"
+import * as Realm from "realm-web"
 
-const EditTask = () => {
+const {
+  BSON: { ObjectId },
+} = Realm;
+
+const EditTask = ({ user }) => {
   const theme = createTheme();
-
+  const mongo = user.mongoClient("mongodb-atlas");
+  const collection = mongo.db("todoDB").collection("task");
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
 
@@ -24,47 +31,39 @@ const EditTask = () => {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log("nimi ",typeof(name));
-    setDetails(values => ({...values, [name]: value}))
+    console.log("nimi ", typeof (name));
+    setDetails(values => ({ ...values, [name]: value }))
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(details);
-    axios.request({
-      method:"patch",
-      url:`http://[::1]:3000/tasks/${details.id}`,
-      data: details
-    }).then(response => {
-      alert("Muutokset tallennettu");
-      navigate(`/tasks`,  { replace: true })
-    })
+    TaskService.updateTask(collection, details._id, details)
+      .then(response => {
+        console.log(response);
+        alert("Muutokset tallennettu");
+        navigate(`/tasks`, { replace: true })
+      })
+      .catch(error => console.log(error))
   }
 
   const params = useParams()
 
   let navigate = useNavigate()
 
-  const [details, setDetails] = useState ([])
-  console.log("start end arvot ", details.startTime," " , details.endTime)
+  const [details, setDetails] = useState([])
 
   useEffect(() => {
-      console.log("task details id testi ", params.id);
-      axios.get(`http://[::1]:3000/tasks/${params.id}`)
-        .then(response => {
-          console.log(response);
-          setDetails(response.data)
-          console.log("edit details testi", details);
-          setStartTime(details.startTime)
-          setEndTime(details.endTime)
-        })
-        .catch(error => {
-          console.log(error);
-        })
-
-        
-      
-    }, [])
+    const taskid = ObjectId(params.id)
+    TaskService.getById(collection, taskid)
+      .then(response => {
+        console.log(response);
+        setDetails(response)
+        setStartTime(details.startTime)
+        setEndTime(details.endTime)
+      })
+      .catch(error => console.log(error))
+  }, [])
 
   return (
 
@@ -113,9 +112,9 @@ const EditTask = () => {
                   <DateTimePicker
                     label="Alkaa"
                     name="startTime"
-                    value={details.startTime }
+                    value={details.startTime}
                     onChange={(newValue) => {
-                      setDetails(values => ({...values, ["startTime"]: newValue.format()}))
+                      setDetails(values => ({ ...values, ["startTime"]: newValue.format() }))
                     }}
                     renderInput={(params) => <TextField {...params} fullWidth />}
                   />
@@ -128,7 +127,7 @@ const EditTask = () => {
                     name="endTime"
                     value={details.endTime}
                     onChange={(newValue) => {
-                      setDetails(values => ({...values, ["endTime"]: newValue.format()}))
+                      setDetails(values => ({ ...values, ["endTime"]: newValue.format() }))
                     }}
                     renderInput={(params) => <TextField {...params} fullWidth />}
                   />

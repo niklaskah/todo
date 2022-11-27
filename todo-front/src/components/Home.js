@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react"
-import { isLoggedIn } from "../services/UserService"
 import { useNavigate } from 'react-router-dom';
 
-const Home = ({setLoginStatus}) => {
+const Home = (user) => {
     const navigate = useNavigate()
     useEffect(() => {
-        if (isLoggedIn()) {
-            setLoginStatus(true)
+        if (user != null) {
             navigate(`/tasks`,  { replace: true })
         } else {
             navigate(`/signin`,  { replace: true })
-            setLoginStatus(false)
         }
       }, [])
     return <div className="App"></div>
