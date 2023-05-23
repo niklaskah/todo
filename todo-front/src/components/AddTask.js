@@ -45,7 +45,6 @@ const AddTask = ({ user }) => {
     TaskService.addTask(collection, newTask)
       .then(response => {
         console.log(response);
-        alert("Tehtävä lisätty");
         navigate(`/tasks`, { replace: true })
       })
       .catch(error => console.log(error))

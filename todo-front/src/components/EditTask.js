@@ -41,7 +41,6 @@ const EditTask = ({ user }) => {
     TaskService.updateTask(collection, details._id, details)
       .then(response => {
         console.log(response);
-        alert("Muutokset tallennettu");
         navigate(`/tasks`, { replace: true })
       })
       .catch(error => console.log(error))

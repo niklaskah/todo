@@ -47,7 +47,6 @@ export default function SignIn() {
     axios.post(`http://[::1]:3000/users/login`, newUser)
     .then(response => {
       console.log(response);
-      alert("Kirjautuminen onnistui!");
       navigate(`/tasks`,  { replace: true })
       localStorage.setItem("user", JSON.stringify(response.data))
     }).catch(error => console.log(error))

@@ -35,7 +35,6 @@ const TaskDetails = () => {
         let taskId = details.id
         axios.delete(`http://[::1]:3000/tasks/${taskId}`)
         .then(response => {
-            alert("Tehtävä poistettu")
            navigate("/tasks",  { replace: true })
         })
         .catch(error => console.log(error))

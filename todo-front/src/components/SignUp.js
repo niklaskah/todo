@@ -49,7 +49,6 @@ export default function SignUp() {
     axios.post(`http://[::1]:3000/signup`, newUser)
     .then(response => {
       console.log(response);
-      alert("Käyttäjä rekisteröity");
       navigate(`/signin`,  { replace: true })
     }).catch(error => console.log(error))
   };

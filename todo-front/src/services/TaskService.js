@@ -1,8 +1,8 @@
 
-const getTasksByUserId = async (user) => {
+const getTasksByUserId = async (collection) => {
     let tasks = []
     try {
-        tasks = await user.functions.getTasksByUserId()
+        tasks = await collection.find()
     } catch (error) {
         console.error(error)
     }

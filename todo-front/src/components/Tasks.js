@@ -10,11 +10,10 @@ const {
 
 const Tasks = ({ user }) => {
   const [tasks, setTasks] = useState([])
-  // const [user, setUser] = useState("")
   const mongo = user.mongoClient("mongodb-atlas");
   const collection = mongo.db("todoDB").collection("task");
   useEffect(() => {
-    TaskService.getTasksByUserId(user)
+    TaskService.getTasksByUserId(collection)
       .then(response => {
         setTasks(response)
       })
@@ -29,7 +28,6 @@ const Tasks = ({ user }) => {
     TaskService.deleteById(collection, id)
       .then(response => {
         console.log(response);
-        alert("Tehtävä poistettu")
         setTasks(tasks.filter(task => task._id !== id))
       })
       .catch(error => console.log(error))

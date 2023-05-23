@@ -17,6 +17,17 @@ const app = new Realm.App({ id: REALM_APP_ID })
 function UserDetail({ user }) {
   return (
     <div>
+      <Navbar/>
+      <Routes>
+        <Route path='/' element={<Home user={user}/>}/>
+        <Route path='signin' element={<SignIn/>}/>
+        <Route path='signup' element={<SignUp/>}/>
+        <Route path='tasks' element={<Tasks user={user}/>}/>
+        <Route path='logout' element={<Logout/>}/>
+        <Route path='tasks/:Id' element={<TaskDetails/>}/>
+        <Route path='tasks/edit/:id' element={<EditTask user={user}/>}/>
+        <Route path='tasks/add' element={<AddTask user={user}/>}/>
+      </Routes>
       <h1>Kirjautunut Sisään</h1>
     </div>
   );
@@ -34,17 +45,7 @@ function App() {
   const [user, setUser] = useState(app.currentUser)
   return (
     <div className="App">
-      <Navbar/>
-      <Routes>
-        <Route path='/' element={<Home user={user}/>}/>
-        <Route path='signin' element={<SignIn/>}/>
-        <Route path='signup' element={<SignUp/>}/>
-        <Route path='tasks' element={<Tasks user={user}/>}/>
-        <Route path='logout' element={<Logout/>}/>
-        <Route path='tasks/:Id' element={<TaskDetails/>}/>
-        <Route path='tasks/edit/:id' element={<EditTask user={user}/>}/>
-        <Route path='tasks/add' element={<AddTask user={user}/>}/>
-      </Routes>
+
       <div className="App-header">
         {user ? <UserDetail user={user} /> : <Login setUser={setUser} />}
       </div>
