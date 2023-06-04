@@ -8,13 +8,16 @@ import Logout from './components/Logout';
 import Navbar from './components/Navbar';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
-import TaskDetails from './components/TaskDetails';
 import Tasks from './components/Tasks';
 import * as Realm from "realm-web";
 
+//open mongodb connection
 const REALM_APP_ID = process.env.REACT_APP_REALM_APP_ID
 const app = new Realm.App({ id: REALM_APP_ID })
-function UserDetail({ user }) {
+
+function UserIsLoggedIn({ user }) {
+  //IF user is found return components that need user prop
+  //add conditional for navbar items when user is logged in
   return (
     <div>
       <Navbar/>
@@ -24,33 +27,34 @@ function UserDetail({ user }) {
         <Route path='signup' element={<SignUp/>}/>
         <Route path='tasks' element={<Tasks user={user}/>}/>
         <Route path='logout' element={<Logout/>}/>
-        <Route path='tasks/:Id' element={<TaskDetails/>}/>
         <Route path='tasks/edit/:id' element={<EditTask user={user}/>}/>
         <Route path='tasks/add' element={<AddTask user={user}/>}/>
       </Routes>
-      <h1>Kirjautunut Sisään</h1>
     </div>
   );
 }
-// Create a component that lets an anonymous user log in
-function Login({ setUser }) {
-  const loginAnonymous = async () => {
-    const user = await app.logIn(Realm.Credentials.anonymous());
-    setUser(user);
-  };
-  return <button onClick={loginAnonymous}>Log In</button>;
-}
 function App() {
+  useEffect(() => {
+    // Create a component that lets an anonymous user log in
+    const loginAnonymous = async () => {
+      const user = await app.logIn(Realm.Credentials.anonymous());
+      setUser(user);
+      console.log("User Logged in");
+    }
+    user ? console.log("User Found") : loginAnonymous() 
+
+  }, []);
   
   const [user, setUser] = useState(app.currentUser)
   return (
     <div className="App">
 
       <div className="App-header">
-        {user ? <UserDetail user={user} /> : <Login setUser={setUser} />}
+        {user ? <UserIsLoggedIn user={user} /> : <div />}
       </div>
     </div>
   );
 }
+
 
 export default App;

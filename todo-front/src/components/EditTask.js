@@ -1,8 +1,6 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import moment from 'moment';
 import { useNavigate, useParams } from "react-router-dom";
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -15,6 +13,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TaskService from "../services/TaskService"
 import * as Realm from "realm-web"
+import { Link } from "react-router-dom"
 
 const {
   BSON: { ObjectId },
@@ -27,7 +26,7 @@ const EditTask = ({ user }) => {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
 
-
+//handler for name and details
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -45,14 +44,15 @@ const EditTask = ({ user }) => {
       })
       .catch(error => console.log(error))
   }
-
+//for getting the task id from browser address bar
   const params = useParams()
-
+//navigation component for when task edit succeeds
   let navigate = useNavigate()
 
   const [details, setDetails] = useState([])
 
   useEffect(() => {
+    //get task id from browser address bar
     const taskid = ObjectId(params.id)
     TaskService.getById(collection, taskid)
       .then(response => {
@@ -79,7 +79,7 @@ const EditTask = ({ user }) => {
         >
 
           <Typography component="h1" variant="h5">
-            Muuta Tehtävää
+            Edit Task
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -88,7 +88,7 @@ const EditTask = ({ user }) => {
                   required
                   id="outlined-required"
                   name='name'
-                  label="Tehtävän nimi"
+                  label="Task name"
                   value={details.name || ""}
                   onChange={handleChange}
                   fullWidth
@@ -99,7 +99,7 @@ const EditTask = ({ user }) => {
                   required
                   id="outlined-required"
                   name='description'
-                  label="Tehtävän kuvaus"
+                  label="Task description"
                   fullWidth
                   value={details.description || ""}
                   onChange={handleChange}
@@ -109,7 +109,7 @@ const EditTask = ({ user }) => {
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
-                    label="Alkaa"
+                    label="Start"
                     name="startTime"
                     value={details.startTime}
                     onChange={(newValue) => {
@@ -122,7 +122,7 @@ const EditTask = ({ user }) => {
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
-                    label="Loppuu"
+                    label="End"
                     name="endTime"
                     value={details.endTime}
                     onChange={(newValue) => {
@@ -139,8 +139,13 @@ const EditTask = ({ user }) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Tallenna
+              Save
             </Button>
+            <Button component={Link} to="/tasks"
+              fullWidth
+              variant="contained"
+              sx={{mb: 2 }}
+            >Go back</Button>
           </Box>
         </Box>
       </Container>

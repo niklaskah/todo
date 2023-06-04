@@ -27,7 +27,7 @@ const Logout = () => {
           >
   
             <Typography component="h1" variant="h5">
-              Uloskirjautuminen onnistui
+              Log out successfull
             </Typography>
 
           </Box>

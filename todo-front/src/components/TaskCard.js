@@ -7,22 +7,22 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import moment from "moment";
-import 'moment/locale/fi'
+import 'moment/locale/en-gb'
 import TaskService from "../services/TaskService"
 
 const StopWatch = (props) => {
-
+  //for tracking spent time on a task
   const { details, isActive, setIsActive, time, setTime, collection } = props
   const taskid = details._id.toString()
   const handleStart = () => {
     setIsActive(true);
-    console.log("aloitettu tehtävä", details.name);
+    console.log("task started", details.name);
     console.log(time);
   }
 
   const handleStop = () => {
     setIsActive(false);
-    console.log("lopetettu tehtävä", details.name);
+    console.log("task ended", details.name);
     console.log(time);
     details.spentTime = time
     TaskService.updateSpentTime(collection, details._id, time)
@@ -49,11 +49,11 @@ const StopWatch = (props) => {
 
   if (isActive === false) {
     return (
-      <Button size="small" onClick={handleStart} >Aloita tehtävä</Button>
+      <Button size="small" onClick={handleStart} >Start task</Button>
     )
   } else {
     return (
-      <Button size="small" onClick={handleStop} >Lopeta tehtävä</Button>
+      <Button size="small" onClick={handleStop} >End task</Button>
     )
   }
 
@@ -69,7 +69,6 @@ const TaskCard = (props) => {
   moment.locale('fi')
   const [isActive, setIsActive] = useState(false)
   const [time, setTime] = useState(details.spentTime)
-  // console.log("card time ", time);
 
   return (
     <Box sx={{ minWidth: 275, maxWidth: "md", padding: "5px" }}>
@@ -82,21 +81,21 @@ const TaskCard = (props) => {
             {details.name}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Aloitusaika: {moment(details.startTime).format("dddd, MMMM Do YYYY, h:mm:ss")} <br />
-            Lopetusaika: {moment(details.endTime).format("dddd, MMMM Do YYYY, h:mm:ss")}
+            Start: {moment(details.startTime).format("dddd, MMMM Do YYYY, h:mm:ss")} <br />
+            End: {moment(details.endTime).format("dddd, MMMM Do YYYY, h:mm:ss")}
           </Typography>
           <Typography variant="body2">
             {details.description}
           </Typography>
           <Typography variant="body2">
-            Tehtävään käytetty aika: {moment.utc(time).format('HH:mm:ss')}
+            Time used: {moment.utc(time).format('HH:mm:ss')}
           </Typography>
         </CardContent>
         <CardActions>
           <Link style={{ textDecoration: "none" }} to={`/tasks/edit/${taskid}`}>
-            <Button size="small">Muuta</Button>
+            <Button size="small">Edit</Button>
           </Link>
-          <Button size="small" onClick={() => onClick(details._id)} >Poista</Button>
+          <Button size="small" onClick={() => onClick(details._id)} >Remove</Button>
           <StopWatch details={details} isActive={isActive} setIsActive={setIsActive} time={time} setTime={setTime} collection={collection}></StopWatch>
         </CardActions>
       </Card>

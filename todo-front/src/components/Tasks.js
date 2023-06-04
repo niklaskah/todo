@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import TaskService from "../services/TaskService"
-import TaskCard from "./TaskCard";
-import * as Realm from "realm-web"
+import TaskCard from "./TaskCard"
+import Button from '@mui/material/Button';
 
-const {
-  BSON: { ObjectId },
-} = Realm;
 
 const Tasks = ({ user }) => {
   const [tasks, setTasks] = useState([])
@@ -40,21 +37,17 @@ const Tasks = ({ user }) => {
     )
   })
 
-  // if (isLoggedIn() === false) {
-  //   return <h1>Kirjaudu sisään nähdäksesi tehtävälistan</h1>
-  // } else {
+
   return (
 
-    <div>
-      <h1>Tehtävälista</h1>
+    <div style={{paddingLeft: 10, paddingTop: 10}}>
+      <Button component={Link} to="/tasks/add">Add task</Button>
       <ul className="collection">
         {taskItems}
       </ul>
-      <Link className="btn grey" to="/tasks/add">Lisää tehtävä</Link>
+      <Button component={Link} to="/tasks/add">Add task</Button>
     </div>
   );
-  // }
-
 
 }
 

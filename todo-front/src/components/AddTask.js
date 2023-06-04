@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import moment from 'moment';
 import { useNavigate } from "react-router-dom";
 import userService from "../services/UserService";
@@ -15,15 +14,18 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TaskService from "../services/TaskService"
+import { Link } from "react-router-dom"
 
 const AddTask = ({ user }) => {
   const theme = createTheme();
+  //Connect to mongodb using user prop from App
   const mongo = user.mongoClient("mongodb-atlas");
   const collection = mongo.db("todoDB").collection("task");
 
+  //Set usestates for tracking time for  materialui calendar component
   const [startTime, setStartTime] = useState(moment().format());
   const [endTime, setEndTime] = useState(moment().format());
-
+//handler for name and details
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -50,9 +52,9 @@ const AddTask = ({ user }) => {
       .catch(error => console.log(error))
   }
 
-
+//navigation component for when task submission succeeds
   let navigate = useNavigate()
-
+// usestate for tracking task data
   const [details, setDetails] = useState([])
 
   return (
@@ -70,7 +72,7 @@ const AddTask = ({ user }) => {
         >
 
           <Typography component="h1" variant="h5">
-            Lisää Tehtävä
+            Add task
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -79,7 +81,7 @@ const AddTask = ({ user }) => {
                   required
                   id="outlined-required"
                   name='name'
-                  label="Tehtävän nimi"
+                  label="Task name"
                   value={details.name || ""}
                   onChange={handleChange}
                   fullWidth
@@ -91,7 +93,7 @@ const AddTask = ({ user }) => {
                   required
                   id="outlined-required"
                   name='description'
-                  label="Tehtävän kuvaus"
+                  label="Task description"
                   fullWidth
                   value={details.description || ""}
                   onChange={handleChange}
@@ -101,7 +103,7 @@ const AddTask = ({ user }) => {
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
-                    label="Alkaa"
+                    label="Start"
                     name="startTime"
                     value={startTime}
                     onChange={(newValue) => {
@@ -114,7 +116,7 @@ const AddTask = ({ user }) => {
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
-                    label="Loppuu"
+                    label="End"
                     name="endTime"
                     value={endTime}
                     onChange={(newValue) => {
@@ -131,8 +133,13 @@ const AddTask = ({ user }) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Lisää
+              Add task
             </Button>
+            <Button component={Link} to="/tasks"
+              fullWidth
+              variant="contained"
+              sx={{mb: 2 }}
+            >Go back</Button>
           </Box>
         </Box>
       </Container>

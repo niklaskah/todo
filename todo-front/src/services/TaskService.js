@@ -1,5 +1,6 @@
-
+//components get their data and mongodb functionality and connection in props
 const getTasksByUserId = async (collection) => {
+    //placeholder, does not get by userid at the moment, returns all task in db
     let tasks = []
     try {
         tasks = await collection.find()
