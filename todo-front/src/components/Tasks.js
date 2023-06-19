@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
 import TaskService from "../services/TaskService"
 import TaskCard from "./TaskCard"
-import Button from '@mui/material/Button';
+import FloatingActionAddButton from "./FloatingActionAddButton"
+import Grid from '@mui/material/Grid'
 
 
 const Tasks = ({ user }) => {
@@ -33,19 +33,27 @@ const Tasks = ({ user }) => {
   const taskItems = tasks.map(task => {
     const taskid = task._id.toString()
     return (
+      <Grid item xs={2} sm={4} md={4} key={taskid}>
       <TaskCard key={taskid} details={task} user={user} onClick={onDelete} />
+    </Grid>
     )
   })
 
 
   return (
 
-    <div style={{paddingLeft: 10, paddingTop: 10}}>
-      <Button component={Link} to="/tasks/add">Add task</Button>
-      <ul className="collection">
+    <div>
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         {taskItems}
-      </ul>
-      <Button component={Link} to="/tasks/add">Add task</Button>
+      </Grid>
+      <div style={{
+       bottom: 0,
+       left: "100%",
+       marginLeft: -100,
+       position: "fixed"
+       }}>
+      <FloatingActionAddButton />
+    </div>
     </div>
   );
 
