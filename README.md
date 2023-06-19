@@ -15,6 +15,7 @@ React with Material UI 5 for user interface and MongoDB realm for backend servic
 * ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 * ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 * ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+
 Additionally https://momentjs.com/ was used for handling dates.
 
 <!-- USAGE EXAMPLES -->
